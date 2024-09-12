@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đồ án tốt nghiệp - Phát triển mô hình thùng rác thông minh</title>
+    <style>
+        body {
+            background-color: white;
+            color: black;
+            font-family: Arial, sans-serif;
+        }
+
+        body.dark-mode {
+            background-color: black;
+            color: white;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .header img {
+            max-width: 100px;
+            height: auto;
+        }
+
+        .nav-bar {
+            background-color: #333;
+            overflow: hidden;
+        }
+
+        .nav-bar a {
+            float: left;
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 20px;
+            text-decoration: none;
+        }
+
+        .nav-bar a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 20px;
+        }
+
+        .active {
+            display: block;
+        }
+
+        canvas {
+            margin-bottom: 40px;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="light-theme lang-vi">
+    <div class="nav-bar">
+        <a href="#statistics" onclick="showTab('statistics')">Thống kê</a>
+    </div>
+
+    <div id="statistics" class="tab-content active">
+        <h2>Thống kê số lần mở servo trong tuần</h2>
+        <canvas id="servoChart" width="400" height="200"></canvas>
+
+        <h2>Thống kê trạng thái cảm biến hồng ngoại</h2>
+        <canvas id="irSensorChart" width="400" height="200"></canvas>
+    </div>
+
+    <script>
+        // Chuyển đổi tab
+        function showTab(tabId) {
+            var tabs = document.getElementsByClassName('tab-content');
+            for (var i = 0; i < tabs.length; i++) {
+                tabs[i].classList.remove('active');
+            }
+            var activeTab = document.getElementById(tabId);
+            activeTab.classList.add('active');
+        }
+
+        // Thống kê số lần mở servo theo ngày trong tuần
+        let servo1Counts = [5, 2, 4, 7, 3, 6, 2];  // Số lần mở Servo 1 theo ngày trong tuần
+        let servo2Counts = [4, 5, 3, 6, 2, 7, 4];  // Số lần mở Servo 2 theo ngày trong tuần
+        let servo3Counts = [3, 2, 4, 6, 1, 5, 4];  // Số lần mở Servo 3 theo ngày trong tuần
+
+        const ctxServo = document.getElementById('servoChart').getContext('2d');
+        new Chart(ctxServo, {
+            type: 'bar',
+            data: {
+                labels: ['Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7', 'Chủ nhật'],
+                datasets: [
+                    {
+                        label: 'Servo 1',
+                        data: servo1Counts,
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Servo 2',
+                        data: servo2Counts,
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Servo 3',
+                        data: servo3Counts,
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Dữ liệu cho cảm biến hồng ngoại theo ngày trong tuần
+        let sensor1Counts = [1, 3, 4, 2, 5, 6, 3];  // Trạng thái cảm biến hồng ngoại 1
+        let sensor2Counts = [2, 4, 3, 5, 6, 2, 4];  // Trạng thái cảm biến hồng ngoại 2
+        let sensor3Counts = [3, 2, 5, 4, 3, 6, 1];  // Trạng thái cảm biến hồng ngoại 3
+
+        const ctxIR = document.getElementById('irSensorChart').getContext('2d');
+        new Chart(ctxIR, {
+            type: 'line',
+            data: {
+                labels: ['Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7', 'Chủ nhật'],
+                datasets: [
+                    {
+                        label: 'Cảm biến hồng ngoại 1',
+                        data: sensor1Counts,
+                        borderColor: 'rgba(255, 159, 64, 1)',
+                        fill: false,
+                        tension: 0.1
+                    },
+                    {
+                        label: 'Cảm biến hồng ngoại 2',
+                        data: sensor2Counts,
+                        borderColor: 'rgba(153, 102, 255, 1)',
+                        fill: false,
+                        tension: 0.1
+                    },
+                    {
+                        label: 'Cảm biến hồng ngoại 3',
+                        data: sensor3Counts,
+                        borderColor: 'rgba(255, 205, 86, 1)',
+                        fill: false,
+                        tension: 0.1
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

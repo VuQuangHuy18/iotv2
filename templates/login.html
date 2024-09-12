@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang Đăng Nhập</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 400px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .logo {
+            margin-bottom: 20px;
+            width: 200px;
+            height: auto;
+        }
+        .login-form {
+            width: 100%;
+            
+     
+        }
+        .login-form input[type="text"],
+        .login-form input[type="password"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .login-form input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+        }
+        .login-form input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        .additional-info {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+  
+    <div class="container">
+        <h1>Khóa luận tốt nghiệp</h1>
+        <img src="https://huongnghiepviet.com/tuyen-sinh/images/truong/209/dai-hoc-nguyen-tat-thanh.jpg" alt="Logo Trái" class="logo">
+        <div>
+            <h2>Thùng rác thông minh</h2>
+        </div>
+        <div class="login-form">
+            <input type="text" id="username" name="username" placeholder="Tên đăng nhập" required>
+            <input type="password" id="password" name="password" placeholder="Mật khẩu" required>
+           <div style="text-align: center;">
+            <button  onclick="login()">Đăng Nhập</button>
+           </div>
+           
+        </div>
+       
+        <div class="additional-info">
+            Thông tin đăng nhập khác? <a href="#">Đăng ký</a> ngay!
+        </div>
+    </div>
+
+    <script>
+        function login() {
+            // Thông tin đăng nhập được cung cấp
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
+
+            // Kiểm tra thông tin đăng nhập
+            if (username === "admin" && password === "password") {
+                // Chuyển hướng đến trang index.html nếu thông tin đúng
+                window.location.href ="home";
+            } else {
+                // Hiển thị thông báo lỗi nếu thông tin không đúng
+                alert("Tên đăng nhập hoặc mật khẩu không chính xác. Vui lòng thử lại!");
+            }
+        }
+    </script>
+</body>
+</html>
